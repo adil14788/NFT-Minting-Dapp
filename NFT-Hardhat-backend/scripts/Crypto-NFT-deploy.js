@@ -1,15 +1,19 @@
 const { ethers } = require("hardhat");
 
+const { WHITE_LIST_CONTRACT_ADDRESS, baseURI } = require("../constants/index");
+
 async function main() {
 	// const [owner, account] = await ethers.getSigners();
 	const CryptoNftFactory = await ethers.getContractFactory("CryptoNFT");
 	const CryptoNftContract = await CryptoNftFactory.deploy(
-		"CryptoDevNFT.com",
-		"0xb322114cbf4d4707c63ac837f1e372ad1422ecb2"
+		baseURI,
+		WHITE_LIST_CONTRACT_ADDRESS
 	);
 	await CryptoNftContract.deployed();
 	console.log("CryptoNft Contract deployed to:", CryptoNftContract.address);
 
+	// console.log(baseURI);
+	// console.log(WHITE_LIST_CONTRACT_ADDRESS);
 	// let txn;
 
 	// txn = await CryptoNftContract.startPresale();
