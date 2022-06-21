@@ -18,7 +18,7 @@ contract CryptoNFT is ERC721Enumerable, Ownable {
     bool public pauseMint;
 
     modifier onlyWhenNoPause() {
-        require(pauseMint, "Minting has been paused ");
+        require(!pauseMint, "Minting has been paused ");
         _;
     }
 
@@ -57,7 +57,7 @@ contract CryptoNFT is ERC721Enumerable, Ownable {
         );
         require(totalTokenIds < maxTokenIds, "All NFT are minted");
         require(msg.value >= publicPrice, "Not enough fund provided");
-        totalTokenIds + 1;
+        totalTokenIds += 1;
         _safeMint(msg.sender, totalTokenIds);
     }
 
