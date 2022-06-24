@@ -19,6 +19,8 @@ export default function Home() {
 
 	const [isLoading, setIsLoading] = useState(false);
 
+	const [mintingNft, setMintingNft] = useState(false);
+
 	const web3ModalRef = useRef();
 	const router = useRouter();
 
@@ -56,12 +58,16 @@ export default function Home() {
 			const signer = await getSignerOrProvider(true);
 			const NFTContract = new Contract(NFT_CONTRACT_ADDRESS, abi, signer);
 
+			setMintingNft(true);
+
 			const txn = await NFTContract.mint({
 				value: ethers.utils.parseEther("0.01"),
 			});
 			await txn.wait();
 
 			alert("Congratulations you successfully minted a crypto Dev!!!");
+
+			setMintingNft(false);
 		} catch (err) {
 			console.error(err);
 		}
@@ -281,9 +287,14 @@ export default function Home() {
 				<div className={styles.description}>
 					<div>The PreSale has ended. Public Mint Alive</div>
 					<br />
-					<button className={styles.button} onClick={publicMint}>
-						Public Mint
-					</button>
+
+					{mintingNft ? (
+						<h2 className={styles.title}> Minting Your NFT Please Wait ... </h2>
+					) : (
+						<button className={styles.button} onClick={publicMint}>
+							Public Mint
+						</button>
+					)}
 				</div>
 			);
 		}
