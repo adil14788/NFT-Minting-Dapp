@@ -70,6 +70,7 @@ export default function Home() {
 			setMintingNft(false);
 		} catch (err) {
 			console.error(err);
+			setMintingNft(false);
 		}
 	};
 
